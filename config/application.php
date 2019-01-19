@@ -36,7 +36,7 @@ Env::init();
 $dotenv = new Dotenv\Dotenv($dotenv_dir);
 if (file_exists($dotenv_dir . '/.env')) {
     $dotenv->load();
-    $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'WP_HOME', 'WP_SITEURL']);
+    $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'WP_SITEURL']);
 }
 
 /**
@@ -48,8 +48,16 @@ define('WP_ENV', env('WP_ENV') ?: 'production');
 /**
  * URLs
  */
-Config::define('WP_HOME', env('WP_HOME'));
-Config::define('WP_SITEURL', env('WP_SITEURL'));
+$wp_home = env('WP_HOME');
+$wp_siteurl = env('WP_SITEURL');
+
+if (empty($wp_home) && isset($_ENV['PANTHEON_ENVIRONMENT']) && isset($_ENV['PANTHEON_SITE_NAME'])) {
+    $wp_home = 'http://'.$_ENV['PANTHEON_ENVIRONMENT'].'-'.$_ENV['PANTHEON_SITE_NAME'].'.pantheonsite.io';
+    $wp_siteurl = str_replace('${WP_HOME}', $wp_home, $wp_siteurl);
+}
+
+Config::define('WP_HOME', $wp_home);
+Config::define('WP_SITEURL', $wp_siteurl);
 
 /**
  * Custom Content Directory
