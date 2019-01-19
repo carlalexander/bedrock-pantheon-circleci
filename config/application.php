@@ -12,9 +12,18 @@ use Roots\WPConfig\Config;
 
 /** @var string Directory containing all of the site's files */
 $root_dir = dirname(__DIR__);
+/** @var string Directory containing the .env file */
+$dotenv_dir = $root_dir;
 
 /** @var string Document Root */
 $webroot_dir = $root_dir . '/web';
+
+/**
+ * Load .env file from outside the root folder on Pantheon
+ */
+if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
+    $dotenv_dir .= '/../files';
+}
 
 /**
  * Expose global env() function from oscarotero/env
@@ -24,8 +33,8 @@ Env::init();
 /**
  * Use Dotenv to set required environment variables and load .env file in root
  */
-$dotenv = new Dotenv\Dotenv($root_dir);
-if (file_exists($root_dir . '/.env')) {
+$dotenv = new Dotenv\Dotenv($dotenv_dir);
+if (file_exists($dotenv_dir . '/.env')) {
     $dotenv->load();
     $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD', 'WP_HOME', 'WP_SITEURL']);
 }
