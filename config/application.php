@@ -22,7 +22,7 @@ $webroot_dir = $root_dir . '/web';
  * Load .env file from outside the root folder on Pantheon
  */
 if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
-    $dotenv_dir .= '/../files';
+    $dotenv_dir .= '/../files/private';
 }
 
 /**
