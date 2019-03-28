@@ -46,4 +46,6 @@ composer create-project -n -d $HOME/.terminus/plugins pantheon-systems/terminus-
 terminus auth:login -n --machine-token="$TERMINUS_TOKEN"
 
 # Push code to Pantheon
-terminus build:env:push -n "$TERMINUS_SITE.dev"
+if [[ ${CIRCLE_BRANCH} == "master" ]]; then
+    terminus build:env:push -n "$TERMINUS_SITE.dev"
+fi
