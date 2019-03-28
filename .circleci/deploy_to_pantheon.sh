@@ -5,9 +5,14 @@ if [[ -z "$CIRCLECI" ]]; then
     exit 1
 fi
 
-if [[ -z "$CIRCLE_BRANCH" || "$CIRCLE_BRANCH" != "master" ]]; then
-    echo "Build branch is required and must be 'master' branch. Stopping deployment." 1>&2
+if [[ -z "$CIRCLE_BRANCH" ]]; then
+    echo "Build branch is required. Stopping deployment." 1>&2
     exit 0
+fi
+
+if [[ -z "$TERMINUS_SITE" ]]; then
+    echo "Terminus site not set. Aborting." 1>&2
+    exit 1
 fi
 
 if [[ -z "$TERMINUS_TOKEN" ]]; then
