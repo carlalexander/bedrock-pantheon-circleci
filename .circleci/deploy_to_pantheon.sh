@@ -5,11 +5,6 @@ if [[ -z "$CIRCLECI" ]]; then
     exit 1
 fi
 
-if [[ -z "$CIRCLE_BRANCH" ]]; then
-    echo "Build branch is required. Stopping deployment." 1>&2
-    exit 0
-fi
-
 if [[ -z "$TERMINUS_SITE" ]]; then
     echo "Terminus site not set. Aborting." 1>&2
     exit 1
