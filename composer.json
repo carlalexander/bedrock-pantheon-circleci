@@ -3,7 +3,6 @@
   "type": "project",
   "license": "MIT",
   "description": "WordPress project template for using Bedrock with Pantheon and CircleCI",
-  "homepage": "https://roots.io/bedrock/",
   "authors": [
     {
       "name": "Carl Alexander",
