@@ -54,7 +54,7 @@ define('WP_ENV', env('WP_ENV') ?: 'production');
 $wp_home = env('WP_HOME');
 $wp_siteurl = env('WP_SITEURL');
 
-if (empty($wp_home) && isset($_ENV['PANTHEON_ENVIRONMENT']) && isset($_ENV['PANTHEON_SITE_NAME'])) {
+if (empty($wp_home) && isset($_ENV['PANTHEON_ENVIRONMENT'], $_ENV['PANTHEON_SITE_NAME'])) {
     $wp_home = 'http://'.$_ENV['PANTHEON_ENVIRONMENT'].'-'.$_ENV['PANTHEON_SITE_NAME'].'.pantheonsite.io';
     $wp_siteurl = str_replace('${WP_HOME}', $wp_home, $wp_siteurl);
 }
