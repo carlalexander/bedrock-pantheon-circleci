@@ -63,9 +63,9 @@ class Autoloader
         $this->loadPlugins();
     }
 
-   /**
-    * Run some checks then autoload our plugins.
-    */
+    /**
+     * Run some checks then autoload our plugins.
+     */
     public function loadPlugins()
     {
         $this->checkCache();
@@ -114,7 +114,7 @@ class Autoloader
     {
         $cache = get_site_option('bedrock_autoloader');
 
-        if ($cache === false) {
+        if ($cache === false || (isset($cache['plugins'], $cache['count']) && count($cache['plugins']) !== $cache['count'])) {
             $this->updateCache();
             return;
         }
