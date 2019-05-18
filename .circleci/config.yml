@@ -34,6 +34,16 @@ jobs:
             - vendor
             - web/wp
 
+  test:
+    <<: *container_config
+    steps:
+      - checkout
+      - *attach_workspace
+      - *copy_workspace
+      - run:
+          name: Run tests
+          command: composer test
+
   deploy:
     <<: *container_config
     steps:
@@ -49,6 +59,9 @@ workflows:
   build_test_deploy:
     jobs:
       - build
-      - deploy:
+      - test:
           requires:
             - build
+      - deploy:
+          requires:
+            - test
