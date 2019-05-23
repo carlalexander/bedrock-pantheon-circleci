@@ -23,6 +23,8 @@ git config --global user.email "${GIT_EMAIL:-pantheon@circleci.com}"
 git config --global user.name "${GIT_NAME:-Circle CI}"
 
 # Configure SSH
+mkdir -p "$HOME/.ssh"
+touch "$HOME/.ssh/config"
 echo "StrictHostKeyChecking no" >> "$HOME/.ssh/config"
 
 # Convert uploads directory to a symlink

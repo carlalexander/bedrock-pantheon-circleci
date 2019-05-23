@@ -1,24 +1,19 @@
 version: 2.0
 
 references:
+  working_directory: &working_directory
+    ~/pantheon
+
   # Default container configuration
   #
   container_config: &container_config
     docker:
       - image: circleci/php:7.3
-    working_directory: ~/pantheon
-
-  workspace_root: &workspace_root
-    /tmp
+    working_directory: *working_directory
 
   attach_workspace: &attach_workspace
     attach_workspace:
-      at: *workspace_root
-
-  copy_workspace: &copy_workspace
-    run:
-      name: Copy vendor directory
-      command: cp -R /tmp/vendor /tmp/web .
+      at: *working_directory
 
 jobs:
   build:
@@ -31,15 +26,12 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - vendor
-            - web/wp
+            - '*'
 
   test:
     <<: *container_config
     steps:
-      - checkout
       - *attach_workspace
-      - *copy_workspace
       - run:
           name: Run tests
           command: composer test
@@ -47,9 +39,7 @@ jobs:
   deploy:
     <<: *container_config
     steps:
-      - checkout
       - *attach_workspace
-      - *copy_workspace
       - run:
           name: Deploy to Pantheon
           command: .circleci/deploy_to_pantheon.sh
