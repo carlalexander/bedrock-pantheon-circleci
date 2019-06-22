@@ -42,7 +42,7 @@ jobs:
       - *attach_workspace
       - run:
           name: Remove development dependencies
-          command: composer update --no-dev -n -o
+          command: composer install --no-dev -n -o
       - run:
           name: Deploy to Pantheon
           command: .circleci/deploy_to_pantheon.sh
