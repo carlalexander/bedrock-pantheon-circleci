@@ -50,5 +50,6 @@
     "test": [
       "phpcs"
     ]
-  }
+  },
+  "minimum-stability": "dev"
 }
